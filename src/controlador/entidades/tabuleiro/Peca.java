@@ -1,7 +1,7 @@
-package tabuleiro;
+package controlador.entidades.tabuleiro;
 
 public class Peca {
-    protected Posicao posicao;
+    public Posicao posicao;
     private Tabuleiro tabuleiro;
 
     public Peca(Tabuleiro tabuleiro) {
@@ -11,5 +11,4 @@ public class Peca {
     protected Tabuleiro getTabuleiro() {
         return tabuleiro;
     }
-
 }
