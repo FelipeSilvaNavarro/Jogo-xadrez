@@ -14,6 +14,9 @@ public class PartidaXadrez {
         iniciarSetup();
     }
 
+    /**
+     * @return Retorna uma matriz de <b>peca de xadrez</b>
+     */
     public PecaXadrez[][] getPecas() {
         PecaXadrez[][] mat = new PecaXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
         for (int i = 0; i < tabuleiro.getLinhas(); i++) {
