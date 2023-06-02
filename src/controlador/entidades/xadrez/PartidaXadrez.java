@@ -1,7 +1,9 @@
 package controlador.entidades.xadrez;
 
+import controlador.entidades.tabuleiro.Peca;
+import controlador.entidades.tabuleiro.Posicao;
 import controlador.entidades.tabuleiro.Tabuleiro;
-import controlador.entidades.xadrez.pecas.Rei;
+import controlador.entidades.xadrez.excecoes.XadrezExcecoes;
 import controlador.entidades.xadrez.pecas.Torre;
 
 public class PartidaXadrez {
@@ -26,6 +28,38 @@ public class PartidaXadrez {
         return mat;
     }
 
+    /**
+     * @param posicaoDeOrigem
+     * @param posicaoDeDestino
+     * @return a peca capturada da posicao de destino passada
+     * <p>Não é possivel mover uma peca se na posicao de origem <b>não haver uma peça</b></p>
+     */
+    public PecaXadrez executaMovePeca(PosicaoXadrez posicaoDeOrigem, PosicaoXadrez posicaoDeDestino) {
+        Posicao origem = posicaoDeOrigem.toPosicao();
+        Posicao destino = posicaoDeDestino.toPosicao();
+        validarPosicaoDeOrigem(origem);
+        Peca pecaCapturada = fazerMovimento(origem, destino);
+        return (PecaXadrez) pecaCapturada;
+    }
+
+    /**
+     * @param origem
+     * @param destino
+     * @return A peça capturada na posicao de destino
+     */
+    private Peca fazerMovimento(Posicao origem, Posicao destino) {
+        Peca p = tabuleiro.removePeca(origem);
+        Peca pecaCapturada = tabuleiro.removePeca(destino);
+        tabuleiro.colocaPeca(p, destino);
+        return pecaCapturada;
+    }
+
+    private void validarPosicaoDeOrigem(Posicao posicao) {
+        if (!tabuleiro.temUmaPeca(posicao)) {
+            throw new XadrezExcecoes("Nao existe peca na posicao de origem");
+        }
+    }
+
     private void colocarNovaPeca(char coluna, int linha, PecaXadrez pecaXadrez) {
         tabuleiro.colocaPeca(pecaXadrez, new PosicaoXadrez(coluna, linha).toPosicao());
     }
@@ -44,5 +78,5 @@ public class PartidaXadrez {
         colocarNovaPeca('e', 7, new Torre(tabuleiro, Cor.PRETO));
         colocarNovaPeca('e', 8, new Torre(tabuleiro, Cor.PRETO));
         colocarNovaPeca('d', 8, new Torre(tabuleiro, Cor.PRETO));
-}
+    }
 }

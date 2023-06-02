@@ -1,6 +1,8 @@
 package controlador.entidades.xadrez.excecoes;
 
-public class XadrezExcecoes extends RuntimeException {
+import controlador.entidades.tabuleiro.excecoes.TabuleiroExcecoes;
+
+public class XadrezExcecoes extends TabuleiroExcecoes {
     public XadrezExcecoes(String mensagem) {
         super(mensagem);
     }
