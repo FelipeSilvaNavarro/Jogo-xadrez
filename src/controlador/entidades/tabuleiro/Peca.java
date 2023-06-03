@@ -1,6 +1,6 @@
 package controlador.entidades.tabuleiro;
 
-public class Peca {
+public abstract class Peca {
     protected Posicao posicao;
     private Tabuleiro tabuleiro;
 
@@ -10,5 +10,30 @@ public class Peca {
 
     protected Tabuleiro getTabuleiro() {
         return tabuleiro;
+    }
+
+    public abstract boolean[][] possiveisMovimentos();
+
+    /**
+     * @param posicao
+     * @return Se é possivel movimento para a posição passada
+     */
+    public boolean possivelMover(Posicao posicao) {
+        return possiveisMovimentos()[posicao.getLinha()][posicao.getColuna()];
+    }
+
+    /**
+     * @return Se é possivel a peça se mover para algum lugar, caso não, a peça está travada
+     */
+    public boolean existeAlgumPossivelMovimento() {
+        boolean[][] aux = possiveisMovimentos();
+        for (int i = 0; i < aux.length; i++) {
+            for (int j = 0; j < aux.length; j++) {
+                if (aux[i][j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
