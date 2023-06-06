@@ -55,16 +55,42 @@ public class UI {
         for (int i = 0; i < pecaXadrez.length; i++) {
             System.out.print((8 - i) + " ");
             for (int j = 0; j < pecaXadrez.length; j++) {
-                printPeca(pecaXadrez[i][j]);
+                printPeca(pecaXadrez[i][j], false);
             }
             System.out.println();
         }
         System.out.println("  a b c d e f g h");
     }
 
-    private static void printPeca(PecaXadrez peca) {
+    /**
+     * @param pecaXadrez
+     * @param possiveisMovimentos <p>Colore a tela com os possiveis movimentos da peça</p>
+     *                            <p>
+     *                            OBS: Metodo sobrecarergado
+     */
+    public static void printTabuleiro(PecaXadrez[][] pecaXadrez, boolean[][] possiveisMovimentos) {
+        for (int i = 0; i < pecaXadrez.length; i++) {
+            System.out.print((8 - i) + " ");
+            for (int j = 0; j < pecaXadrez.length; j++) {
+                printPeca(pecaXadrez[i][j], possiveisMovimentos[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("  a b c d e f g h");
+    }
+
+    /**
+     * @param peca
+     * @param fundo Possiveis movimentos
+     *              <p>A peça de acordo com a sua cor</p>
+     *              Colore o fundo de acordo com os possiveis movimentos
+     */
+    private static void printPeca(PecaXadrez peca, boolean fundo) {
+        if (fundo) {
+            System.out.print(ANSI_BLUE_BACKGROUND);
+        }
         if (peca == null) {
-            System.out.print("-");
+            System.out.print("-" + ANSI_RESET);
         } else {
             if (peca.getCor() == Cor.BRANCO) {
                 System.out.print(ANSI_WHITE + peca + ANSI_RESET);

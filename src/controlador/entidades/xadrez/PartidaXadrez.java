@@ -29,6 +29,17 @@ public class PartidaXadrez {
     }
 
     /**
+     * @param posicaoOrigem
+     * @return <p>Uma matriz de booleano para onde a peça pode se mover</p>
+     * Onde verdadeiro se <b>a peça pode se mover</b> e falso caso o contrario
+     */
+    public boolean[][] possiveisMovimentos(PosicaoXadrez posicaoOrigem) {
+        Posicao posicao = posicaoOrigem.toPosicao();
+        validarPosicaoDeOrigem(posicao);
+        return tabuleiro.peca(posicao).possiveisMovimentos();
+    }
+
+    /**
      * @param posicaoDeOrigem
      * @param posicaoDeDestino
      * @return a peca capturada da posicao de destino passada
