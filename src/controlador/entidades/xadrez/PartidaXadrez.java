@@ -7,11 +7,16 @@ import controlador.entidades.xadrez.excecoes.XadrezExcecoes;
 import controlador.entidades.xadrez.pecas.Rei;
 import controlador.entidades.xadrez.pecas.Torre;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PartidaXadrez {
 
     private Tabuleiro tabuleiro;
     private int turno;
     private Cor playerAtual;
+    private List<Peca> pecasNoTabuleiro = new ArrayList<>();
+    private List<Peca> pecasCapturadas = new ArrayList<>();
 
     public PartidaXadrez() {
         tabuleiro = new Tabuleiro(8, 8);
@@ -100,11 +105,17 @@ public class PartidaXadrez {
         Peca p = tabuleiro.removePeca(origem);
         Peca pecaCapturada = tabuleiro.removePeca(destino);
         tabuleiro.colocaPeca(p, destino);
+
+        if (pecaCapturada != null) {
+            pecasNoTabuleiro.remove(pecaCapturada);
+            pecasCapturadas.add(pecaCapturada);
+        }
         return pecaCapturada;
     }
 
-    private void colocarNovaPeca(char coluna, int linha, PecaXadrez pecaXadrez) {
-        tabuleiro.colocaPeca(pecaXadrez, new PosicaoXadrez(coluna, linha).toPosicao());
+    private void colocarNovaPeca(char coluna, int linha, PecaXadrez peca) {
+        tabuleiro.colocaPeca(peca, new PosicaoXadrez(coluna, linha).toPosicao());
+        pecasNoTabuleiro.add(peca);
     }
 
     private void iniciarSetup() {
