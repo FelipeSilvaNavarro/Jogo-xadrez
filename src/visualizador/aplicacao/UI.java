@@ -1,6 +1,7 @@
 package visualizador.aplicacao;
 
 import controlador.entidades.xadrez.Cor;
+import controlador.entidades.xadrez.PartidaXadrez;
 import controlador.entidades.xadrez.PecaXadrez;
 import controlador.entidades.xadrez.PosicaoXadrez;
 
@@ -49,6 +50,13 @@ public class UI {
         } catch (RuntimeException e) {
             throw new InputMismatchException("Valores validos sao de a1 ate h8");
         }
+    }
+
+    public static void printPartida(PartidaXadrez partidaXadrez) {
+        printTabuleiro(partidaXadrez.getPecas());
+        System.out.println();
+        System.out.println("Turno: " + partidaXadrez.getTurno());
+        System.out.println("Esperando jogador: " + partidaXadrez.getPlayerAtual());
     }
 
     public static void printTabuleiro(PecaXadrez[][] pecaXadrez) {

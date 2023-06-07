@@ -17,7 +17,7 @@ public class Programa {
         while (true) {
             try {
                 UI.limparTela();
-                UI.printTabuleiro(partidaXadrez.getPecas());
+                UI.printPartida(partidaXadrez);
                 System.out.println();
                 System.out.print("Origem: ");
                 PosicaoXadrez origem = UI.lerPosicaoXadrez(scanner);
@@ -31,10 +31,7 @@ public class Programa {
                 PosicaoXadrez destino = UI.lerPosicaoXadrez(scanner);
 
                 PecaXadrez pecaCapturada = partidaXadrez.executaMovePeca(origem, destino);
-            } catch (XadrezExcecoes e) {
-                System.out.println(e.getMessage());
-                scanner.nextLine();
-            } catch (InputMismatchException e) {
+            } catch (XadrezExcecoes | InputMismatchException e) {
                 System.out.println(e.getMessage());
                 scanner.nextLine();
             }
