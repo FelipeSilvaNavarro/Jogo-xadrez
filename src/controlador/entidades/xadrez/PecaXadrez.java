@@ -16,6 +16,10 @@ public abstract class PecaXadrez extends Peca {
         return cor;
     }
 
+    public PosicaoXadrez getPosicaoXadrez() {
+        return PosicaoXadrez.fromPosicao(posicao);
+    }
+
     /**
      * @param posicao
      * @return Se existe peça adversaria na posição passada

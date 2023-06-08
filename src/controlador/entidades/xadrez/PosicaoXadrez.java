@@ -14,7 +14,7 @@ public class PosicaoXadrez {
      */
     public PosicaoXadrez(int coluna, int linha) {
         if (coluna < 'a' || coluna > 'h' || linha < 1 || linha > 8) {
-            throw new XadrezExcecoes("Valores validao: a1 a h8");
+            throw new XadrezExcecoes("Valores validos: a1 a h8");
         }
         this.coluna = coluna;
         this.linha = linha;
@@ -33,19 +33,17 @@ public class PosicaoXadrez {
     }
 
     /**
-     * @return
-     * A posicao em matriz da posicao no tabueliro de xadrez
+     * @return A posicao em matriz da posicao no tabueliro de xadrez
      */
     protected Posicao toPosicao() {
         return new Posicao(8 - linha, coluna - 'a');
     }
 
     /**
-     * @return
-     * A posicao em tabuleiro de xadrez da matriz passada
+     * @return A posicao em tabuleiro de xadrez da matriz passada
      */
     protected static PosicaoXadrez fromPosicao(Posicao posicao) {
-        return new PosicaoXadrez((char)('a' - posicao.getColuna()), 8 - posicao.getLinha());
+        return new PosicaoXadrez((char) ('a' + posicao.getColuna()), 8 - posicao.getLinha());
     }
 
     @Override
