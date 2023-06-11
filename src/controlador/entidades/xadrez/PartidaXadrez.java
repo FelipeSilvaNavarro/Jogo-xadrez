@@ -16,6 +16,7 @@ public class PartidaXadrez {
     private int turno;
     private Cor playerAtual;
     private boolean xeque;
+    private boolean xequeMate;
     private List<Peca> pecasNoTabuleiro = new ArrayList<>();
     private List<Peca> pecasCapturadas = new ArrayList<>();
 
@@ -28,6 +29,10 @@ public class PartidaXadrez {
 
     public boolean getXeque() {
         return xeque;
+    }
+
+    public boolean getXequeMate() {
+        return xequeMate;
     }
 
     /**
@@ -79,7 +84,11 @@ public class PartidaXadrez {
             throw new XadrezExcecoes("Voce nao pode se colocar em xeque");
         }
         xeque = testXeque(oponente(playerAtual));
-        proximoTurno();
+        if (testXeque(oponente(playerAtual))) {
+            xequeMate = true;
+        } else {
+            proximoTurno();
+        }
         return (PecaXadrez) pecaCapturada;
     }
 
@@ -181,19 +190,44 @@ public class PartidaXadrez {
         return false;
     }
 
-    private void iniciarSetup() {
-        colocarNovaPeca('c', 1, new Torre(tabuleiro, Cor.BRANCO));
-        colocarNovaPeca('c', 2, new Torre(tabuleiro, Cor.BRANCO));
-        colocarNovaPeca('d', 2, new Torre(tabuleiro, Cor.BRANCO));
-        colocarNovaPeca('d', 1, new Rei(tabuleiro, Cor.BRANCO));
-        colocarNovaPeca('e', 2, new Torre(tabuleiro, Cor.BRANCO));
-        colocarNovaPeca('e', 1, new Torre(tabuleiro, Cor.BRANCO));
+    /**
+     * @param cor
+     * @return Verdadeiro se <b>não tiver nenhuma peça da cor passada como parametro que tire o rei do xeque</b> e falso caso contrario
+     * * <p>Move a peça e verifica se o rei da cor passada ainda está em xequemate</p>
+     */
+    public boolean testXequeMate(Cor cor) {
+        if (!testXeque(cor)) {
+            return false;
+        }
+        List<Peca> list = pecasNoTabuleiro.stream().filter(x -> ((PecaXadrez) x).getCor() == cor).toList();
+        for (Peca p : list
+        ) {
+            boolean[][] mat = p.possiveisMovimentos();
+            for (int i = 0; i < tabuleiro.getLinhas(); i++) {
+                for (int j = 0; j < tabuleiro.getColunas(); j++) {
+                    if (mat[i][j]) {
+                        Posicao origem = ((PecaXadrez) p).getPosicaoXadrez().toPosicao();
+                        Posicao destino = new Posicao(i, j);
+                        Peca pecaCapturada = fazerMovimento(origem, destino);
+                        boolean testXeque = testXeque(cor);
+                        desfazerMovimento(origem, destino, pecaCapturada);
+                        if (!testXeque) {
+                            return false;
+                        }
+                    }
+                }
 
-        colocarNovaPeca('c', 7, new Torre(tabuleiro, Cor.PRETO));
-        colocarNovaPeca('c', 8, new Torre(tabuleiro, Cor.PRETO));
-        colocarNovaPeca('d', 7, new Torre(tabuleiro, Cor.PRETO));
-        colocarNovaPeca('d', 8, new Rei(tabuleiro, Cor.PRETO));
-        colocarNovaPeca('e', 7, new Torre(tabuleiro, Cor.PRETO));
-        colocarNovaPeca('e', 8, new Torre(tabuleiro, Cor.PRETO));
+            }
+        }
+        return true;
+    }
+
+    private void iniciarSetup() {
+        colocarNovaPeca('h', 7, new Torre(tabuleiro, Cor.BRANCO));
+        colocarNovaPeca('d', 1, new Torre(tabuleiro, Cor.BRANCO));
+        colocarNovaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
+
+        colocarNovaPeca('b', 8, new Torre(tabuleiro, Cor.PRETO));
+        colocarNovaPeca('a', 8, new Rei(tabuleiro, Cor.PRETO));
     }
 }
