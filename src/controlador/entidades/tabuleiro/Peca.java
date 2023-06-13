@@ -26,10 +26,10 @@ public abstract class Peca {
      * @return Se é possivel a peça se mover para algum lugar, caso não, a peça está travada
      */
     public boolean existeAlgumPossivelMovimento() {
-        boolean[][] aux = possiveisMovimentos();
-        for (int i = 0; i < aux.length; i++) {
-            for (int j = 0; j < aux.length; j++) {
-                if (aux[i][j]) {
+        boolean[][] mat = possiveisMovimentos();
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat.length; j++) {
+                if (mat[i][j]) {
                     return true;
                 }
             }
