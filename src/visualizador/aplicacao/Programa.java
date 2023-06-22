@@ -38,6 +38,11 @@ public class Programa {
                 if (pecaCapturada != null) {
                     capturadas.add(pecaCapturada);
                 }
+                if (partidaXadrez.getPromocao() != null) {
+                    System.out.print("Digite a letra para promocao (B/C/r/T): ");
+                    String tipo = scanner.nextLine();
+                    partidaXadrez.substituirPecaPromovida(tipo);
+                }
             } catch (XadrezExcecoes | InputMismatchException e) {
                 System.out.println(e.getMessage());
                 scanner.nextLine();
