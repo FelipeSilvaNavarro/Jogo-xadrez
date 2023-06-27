@@ -40,7 +40,11 @@ public class Programa {
                 }
                 if (partidaXadrez.getPromocao() != null) {
                     System.out.print("Digite a letra para promocao (B/C/r/T): ");
-                    String tipo = scanner.nextLine();
+                    String tipo = scanner.nextLine().toUpperCase();
+                    while (!tipo.equals("B") && !tipo.equals("C") && !tipo.equals("r") && !tipo.equals("T")) {
+                        System.out.print("Valor invalido! Digite a letra para promocao (B/C/r/T): ");
+                        tipo = scanner.nextLine().toUpperCase();
+                    }
                     partidaXadrez.substituirPecaPromovida(tipo);
                 }
             } catch (XadrezExcecoes | InputMismatchException e) {

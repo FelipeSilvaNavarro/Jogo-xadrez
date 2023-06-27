@@ -6,7 +6,6 @@ import controlador.entidades.tabuleiro.Tabuleiro;
 import controlador.entidades.xadrez.excecoes.XadrezExcecoes;
 import controlador.entidades.xadrez.pecas.*;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,7 +127,7 @@ public class PartidaXadrez {
             throw new IllegalStateException("Nao ha peca para ser promovida");
         }
         if (!tipo.equals("B") && !tipo.equals("C") && !tipo.equals("r") && !tipo.equals("T")) {
-            throw new InvalidParameterException("Tipo invalido para promocao");
+            return promocao;
         }
 
         Posicao pos = promocao.getPosicaoXadrez().toPosicao();
